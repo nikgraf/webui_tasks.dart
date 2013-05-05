@@ -13,9 +13,9 @@ Hop is a framework that simplifies and automates console tasks in Dart.  See [Ho
 # How will this library help me?
 
 This library will allow you to:
-* Compile webui components to Javascript in one console step as well as minidart compilation (dart to dart). [In Development](https://github.com/damondouglas/webui_tasks.dart/issues/milestones)
-* Fix the relative Urls in the output Webui entry point Html file. [Done!](https://github.com/damondouglas/webui_tasks.dart/issues/5)
-* Copy static assets such as Javascript linked from the entry point Html file into the target output directory. [Done!](https://github.com/damondouglas/webui_tasks.dart/issues/4)
+* Compile webui components to Javascript in one console step as well as minidart compilation (dart to dart). [[In Development](https://github.com/damondouglas/webui_tasks.dart/issues/milestones)]
+* Fix the relative Urls in the output Webui entry point Html file. [[Done!](https://github.com/damondouglas/webui_tasks.dart/issues/5)]
+* Copy static assets such as Javascript linked from the entry point Html file into the target output directory. [[Done!](https://github.com/damondouglas/webui_tasks.dart/issues/4)]
 
 # How do I get started?
 
