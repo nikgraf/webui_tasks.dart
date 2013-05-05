@@ -1,0 +1,15 @@
+name: webui_tasks
+version: 0.0.1
+author: Damon Douglas <douglas.damon@gmail.com>
+description: A webui task library based on Hop.
+homepage: https://github.com/damondouglas/webui_tasks.dart
+documentation: http://damondouglas.github.io/webui_tasks.dart
+dependencies:
+  html5lib: any
+  bot: any
+  web_ui: any
+  hop: any
+
+#dependencies:
+#  js: any
+#  unittest: any
