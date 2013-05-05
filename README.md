@@ -17,6 +17,12 @@ This library will allow you to:
 * Fix the relative Urls in the output Webui entry point Html file.
 * Copy static assets such as Javascript linked from the entry point Html file into the target output directory.
 
+# What Hop Tasks are created?
+* [createWebui2DartTask](https://github.com/damondouglas/webui_tasks.dart/blob/master/lib/webui_tasks.dart#L22)
+* [createCopyOutTask](https://github.com/damondouglas/webui_tasks.dart/blob/master/lib/webui_tasks.dart#L40)
+
+_Dart Documentation coming soon._
+
 # How do I get started?
 
 This library isn't yet published on [pub](http://http://pub.dartlang.org/).  Meanwhile, you can add the following dependency:
@@ -27,7 +33,35 @@ dependencies:
     git: https://github.com/damondouglas/webui_tasks.dart
 ```
 
-See [example](https://github.com/damondouglas/webui_tasks.dart/blob/master/example/simple/tool/hop_runner.dart) from [sample webui project](https://github.com/damondouglas/webui_tasks.dart/tree/master/example/simple)
+# Example
+
+```dart
+library hop_runner;
+
+import 'dart:async';
+import 'dart:io';
+import 'package:hop/hop.dart';
+import 'package:hop/hop_tasks.dart';
+import 'package:webui_tasks/webui_tasks.dart';
+
+void main() {
+  String entryPointPath = "web/simple.html";
+  
+  Task w2d = createWebui2DartTask(entryPointPath);
+  addTask("w2d", w2d);
+  
+  Task d2js = createDart2JsTask(["output/simple.html_bootstrap.dart"], liveTypeAnalysis: true, rejectDeprecatedFeatures: true);
+  addTask("d2js", d2js);
+  
+  Task co = createCopyOutTask(entryPointPath, outputType:WebuiTargetType.JS);
+  addTask("co", co);
+  
+  addChainedTask('w2d2js', ['w2d','d2js','co']);
+  
+  runHop();
+}
+```
+[example](https://github.com/damondouglas/webui_tasks.dart/blob/master/example/simple/tool/hop_runner.dart) from [sample webui project](https://github.com/damondouglas/webui_tasks.dart/tree/master/example/simple)
 
 ## Authors
  * [Damon Douglas](https://github.com/damondouglas) ([+Damon Douglas](https://plus.google.com/u/0/108940381045821372455/))
