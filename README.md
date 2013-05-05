@@ -8,7 +8,7 @@ See [article](http://www.dartlang.org/articles/web-ui/) for an introduction.
 
 # What is Hop?
 
-Hop is a framework that simplifies and automates console tasks in Dart.  See [Hop Pub package](http://pub.dartlang.org/packages/hop) for more information.  Also see [article](https://github.com/kevmoo/bot.dart/wiki/Using-Hop%2C-Part-1%3A-Building-and-Running-Your-First-Hop-Task-Application) for an introduction.
+Hop is a framework that simplifies and automates console tasks in Dart.  See [Hop Pub package](http://pub.dartlang.org/packages/hop) for more information.  Also see [article](https://github.com/kevmoo/bot.dart/wiki/Using-Hop%2C-Part-1%3A-Building-and-Running-Your-First-Hop-Task-Application) for a quick tutorial.
 
 # How will this library help me?
 
