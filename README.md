@@ -63,7 +63,7 @@ void main() {
 ```
 
 1. Run in webui project root as `dart tool/hop_runner.dart w2d2js`
-2. Open `output/simple.html` in any modern browser.
+2. Open `output/simple.html` in any modern browser. See [hosted example](https://googledrive.com/host/0B315YrNkj-ZxeEluMlRnX0xOYTQ/simple.html).
 
 From [example](https://github.com/damondouglas/webui_tasks.dart/blob/master/example/simple/tool/hop_runner.dart) in [sample webui project](https://github.com/damondouglas/webui_tasks.dart/tree/master/example/simple)
 
