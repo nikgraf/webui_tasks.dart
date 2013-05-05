@@ -8,6 +8,7 @@ import 'package:hop/hop_tasks.dart';
 import 'package:html5lib/parser.dart';
 import 'package:html5lib/dom.dart';
 
+// Adapted from CompilerTargetType courtesy of:  https://github.com/kevmoo/hop.dart/blob/master/lib/src/hop_tasks/dart2js.dart
 class WebuiTargetType {
   final String _value;
   const WebuiTargetType._internal(this._value);
@@ -59,6 +60,7 @@ Future<bool> _dwc(TaskContext ctx, String output, String entryPoint){
       });
 }
 
+// Inspired by https://github.com/kevmoo/widget.dart/blob/master/bin/copy_out.sh
 Future<bool> _copy_out(TaskContext ctx, String output, String source, String entryPointFileName, {WebuiTargetType outputType: WebuiTargetType.DART}) {
   
   Completer completer = new Completer();
