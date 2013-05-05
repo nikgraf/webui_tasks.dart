@@ -32,5 +32,5 @@ dependencies:
  * _You? File bugs. Fork and Fix bugs. Let's build this community._
 
 ## Acknowledgements
-[Kevin Moore](https://github.com/kevmoo)'s for his work on the [Hop](https://github.com/kevmoo/hop.dart) and [Webui Widget](https://github.com/kevmoo/widget.dart) libraries, from which much of this code and methodology derives.
-[Seth Ladd](https://github.com/sethladd) for [his original idea](https://groups.google.com/a/dartlang.org/forum/?fromgroups=#!topic/web-ui/Xvk3BU8NnxI) that inspired the project.
+* [Kevin Moore](https://github.com/kevmoo)'s for his work on the [Hop](https://github.com/kevmoo/hop.dart) and [Webui Widget](https://github.com/kevmoo/widget.dart) libraries, from which much of this code and methodology derives.
+* [Seth Ladd](https://github.com/sethladd) for [his original idea](https://groups.google.com/a/dartlang.org/forum/?fromgroups=#!topic/web-ui/Xvk3BU8NnxI) that inspired the project.
