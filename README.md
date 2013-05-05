@@ -18,8 +18,8 @@ This library will allow you to:
 * Copy static assets such as Javascript linked from the entry point Html file into the target output directory.
 
 # What Hop Tasks are created?
-* [createWebui2DartTask](https://github.com/damondouglas/webui_tasks.dart/blob/master/lib/webui_tasks.dart#L22)
-* [createCopyOutTask](https://github.com/damondouglas/webui_tasks.dart/blob/master/lib/webui_tasks.dart#L40)
+* [createWebui2DartTask](https://github.com/damondouglas/webui_tasks.dart/blob/master/lib/webui_tasks.dart#L22) - Processes DWC compiler [as described](http://www.dartlang.org/articles/web-ui/tools.html).
+* [createCopyOutTask](https://github.com/damondouglas/webui_tasks.dart/blob/master/lib/webui_tasks.dart#L40) - Fixes entry point html file from DWC compiler output as well as copies linked static assets.
 
 _Dart Documentation coming soon._
 
