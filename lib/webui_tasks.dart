@@ -14,7 +14,6 @@ class WebuiTargetType {
   const WebuiTargetType._internal(this._value);
   String toString() => 'CompilerTargetType.$_value';
   String get fileExt => _value;
-
   static const JS = const WebuiTargetType._internal('js');
   static const DART = const WebuiTargetType._internal('dart');
   static const MINIDART = const WebuiTargetType._internal('minidart');
@@ -34,7 +33,18 @@ Task createWebui2DartTask(String entryPoint, {String outputPath:"output", WebuiT
   return new Task.async((TaskContext context){
     return _dwc(context, outputPath, entryPoint).whenComplete((){
       context.info("Compiled Webui at: $outputPath");
-        return _copy_out(context, outputPath, entryPointPath.directoryPath, entryPointFileName);
+    });
+  });
+}
+
+Task createCopyOutTask(String entryPoint, {String outputPath:"output", WebuiTargetType outputType:WebuiTargetType.DART}) {
+  final entryPointPath = new Path(entryPoint);
+  final entryPointFile = new File.fromPath(entryPointPath);
+  final entryPointFileName = entryPointPath.filename;
+  
+  return new Task.async((TaskContext context){
+    return _copy_out(context, outputPath, entryPointPath.directoryPath, entryPointFileName, outputType).whenComplete((){
+      context.info("Copied Out Complete.");
     });
   });
 }
@@ -60,8 +70,7 @@ Future<bool> _dwc(TaskContext ctx, String output, String entryPoint){
       });
 }
 
-// Inspired by https://github.com/kevmoo/widget.dart/blob/master/bin/copy_out.sh
-Future<bool> _copy_out(TaskContext ctx, String output, String source, String entryPointFileName, {WebuiTargetType outputType: WebuiTargetType.DART}) {
+Future<bool> _copy_out(TaskContext ctx, String output, String source, String entryPointFileName, WebuiTargetType outputType) {
   
   Completer completer = new Completer();
   
