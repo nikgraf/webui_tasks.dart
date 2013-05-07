@@ -15,7 +15,7 @@ void main() {
   Task d2js = createDart2JsTask(["output/simple.html_bootstrap.dart"], liveTypeAnalysis: true, rejectDeprecatedFeatures: true);
   addTask("d2js", d2js);
   
-  Task co = createCopyOutTask(entryPointPath, outputType:WebuiTargetType.JS);
+  Task co = createCopyOutTask(entryPointPath);
   addTask("co", co);
   
   addChainedTask('w2d2js', ['w2d','d2js','co']);
