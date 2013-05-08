@@ -18,6 +18,9 @@ void main() {
   Task co = createCopyOutTask(entryPointPath);
   addTask("co", co);
   
+  Task fix = createFixUrlTask("output/simple.html");
+  addTask("fix",fix);
+  
   addChainedTask('w2d2js', ['w2d','d2js','co']);
   
   runHop();
