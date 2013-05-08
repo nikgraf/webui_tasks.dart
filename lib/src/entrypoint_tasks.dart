@@ -32,11 +32,13 @@ Task createWebui2DartTask(String entryPoint, {String outputPath:"output", bool r
   assert(packageDir.existsSync());
   assert(entryPointFile.existsSync() && entryPoint.endsWith(".html"));
   
-  return new Task.async((TaskContext context){
-    return _dwc(context, outputPath, entryPoint, rewriteUrls).whenComplete((){
-      context.info("Compiled Webui at: $outputPath");
+  if(outputType == WebuiTargetType.DART) {
+    return new Task.async((TaskContext context){
+      return _dwc(context, outputPath, entryPoint, rewriteUrls).whenComplete((){
+        context.info("Compiled Webui at: $outputPath");
+      });
     });
-  });
+  }
 }
 
 Future<bool> _dwc(TaskContext ctx, String output, String entryPoint, bool rewriteUrls){
@@ -95,9 +97,11 @@ Future<bool> _fixUrls(TaskContext ctx, String compiledEntryPoint, String staticP
       ctx.fine(path.filename);
       element.attributes["src"] = "$staticPath${path.filename}";
     } else {
-      
+      if(WebuiTargetType.MINIDART) {
+        element.attributes["src"] = "$staticPath${path.filename}_bootstrap.compiled.dart";
+      }
       if(WebuiTargetType.JS) {
-        element.attributes["src"] = "$staticPath${path.filename}.js";
+        element.attributes["src"] = "$staticPath${path.filename}_bootstrap.dart.js";
       }
     }
   });
