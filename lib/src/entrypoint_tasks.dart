@@ -90,10 +90,15 @@ Future<bool> _fixUrls(TaskContext ctx, String compiledEntryPoint, String staticP
   .forEach((element){
     String src = element.attributes["src"];
     ctx.fine(src);
+    var path = new Path(src);
     if(!src.contains(".dart")){
-      var path = new Path(src);
       ctx.fine(path.filename);
       element.attributes["src"] = "$staticPath${path.filename}";
+    } else {
+      
+      if(WebuiTargetType.JS) {
+        element.attributes["src"] = "$staticPath${path.filename}.js";
+      }
     }
   });
   
