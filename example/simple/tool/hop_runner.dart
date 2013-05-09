@@ -15,19 +15,19 @@ void main() {
   //Task d2d = createDartCompilerTask(["output/simple.html_bootstrap.dart"],outputType:CompilerTargetType.DART);
   //addTask("d2d", d2d);
   
-  Task d2js = createDart2JsTask(["output/simple.html_bootstrap.dart"], liveTypeAnalysis: true, rejectDeprecatedFeatures: true);
-  addTask("d2js", d2js);
+  //Task d2js = createDart2JsTask(["output/simple.html_bootstrap.dart"], liveTypeAnalysis: true, rejectDeprecatedFeatures: true);
+  //addTask("d2js", d2js);
   
   Task co = createCopyOutTask(entryPointPath);
   addTask("co", co);
   
-  Task fix = createFixUrlTask("output/simple.html");
-  addTask("fix",fix);
+  Task fixjs = createFixUrlTask("output/simple.html", outputType:WebuiTargetType.JS);
+  addTask("fixjs",fixjs);
   
-  ChainedTask w2d2d = createWebui2MiniDartTask(entryPointPath);
-  addTask("w2d2d", w2d2d);
+  ChainedTask w2d2js = createWebui2JsTask(entryPointPath);
+  addTask("w2d2js", w2d2js);
   
-  addChainedTask('w2d2js', ['w2d','d2js','co']);
+  addChainedTask('deployjs', ['w2d2js','fixjs','co']);
   
   runHop();
 }

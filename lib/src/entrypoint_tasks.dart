@@ -37,6 +37,13 @@ Task createWebui2DartTask(String entryPoint, {String outputPath:"output", bool r
   });
 }
 
+/*
+ * Wrapper for the DWC compiler whose final product is a minified compiled Dart entry point.
+ * [entryPoint] is the path to the main entry point of the webui application.  
+ * [outputPath] defaults to [project_root/output] unless one is provided.  
+ * [rewriteUrls] determines whether to pass --rewrite-urls or --no-rewrite-urls to the dwc compiler.
+ */
+
 ChainedTask createWebui2MiniDartTask(String entryPoint, {String outputPath:"output", bool rewriteUrls:false}) {
   
   final entryPointPath = new Path(entryPoint);
@@ -51,6 +58,28 @@ ChainedTask createWebui2MiniDartTask(String entryPoint, {String outputPath:"outp
   Task d2d = createDartCompilerTask(["$outputPath/${entryPointFileName}_bootstrap.dart"], outputType:CompilerTargetType.DART);
   addTask("w2d", w2d);
   return w2d.chain("w2d").and("d2d", d2d);
+}
+
+/*
+ * Wrapper for the DWC compiler whose final product is a Javascript compiled entry point.
+ * [entryPoint] is the path to the main entry point of the webui application.  
+ * [outputPath] defaults to [project_root/output] unless one is provided.  
+ * [rewriteUrls] determines whether to pass --rewrite-urls or --no-rewrite-urls to the dwc compiler.
+ */
+
+ChainedTask createWebui2JsTask(String entryPoint, {String outputPath:"output", bool rewriteUrls:false}) {
+  final entryPointPath = new Path(entryPoint);
+  final entryPointFile = new File.fromPath(entryPointPath);
+  final entryPointFileName = entryPointPath.filename;
+  final packageDir = new Directory('packages');
+  
+  assert(packageDir.existsSync());
+  assert(entryPointFile.existsSync() && entryPoint.endsWith(".html"));
+  
+  Task w2d = createWebui2DartTask(entryPoint, outputPath:outputPath, rewriteUrls:rewriteUrls);
+  Task d2js = createDart2JsTask(["$outputPath/${entryPointFileName}_bootstrap.dart"], liveTypeAnalysis: true, rejectDeprecatedFeatures: true);
+  addTask("w2d", w2d);
+  return w2d.chain("w2d").and("d2js", d2js);
 }
 
 Future<bool> _dwc(TaskContext ctx, String output, String entryPoint, bool rewriteUrls){
