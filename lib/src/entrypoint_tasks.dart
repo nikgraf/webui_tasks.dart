@@ -56,8 +56,8 @@ ChainedTask createWebui2MiniDartTask(String entryPoint, {String outputPath:"outp
   
   Task w2d = createWebui2DartTask(entryPoint, outputPath:outputPath, rewriteUrls:rewriteUrls);
   Task d2d = createDartCompilerTask(["$outputPath/${entryPointFileName}_bootstrap.dart"], outputType:CompilerTargetType.DART);
-  addTask("w2d", w2d);
-  return w2d.chain("w2d").and("d2d", d2d);
+  addTask("w2d_j", w2d);
+  return w2d.chain("w2d_j").and("d2d", d2d);
 }
 
 /*
@@ -78,8 +78,8 @@ ChainedTask createWebui2JsTask(String entryPoint, {String outputPath:"output", b
   
   Task w2d = createWebui2DartTask(entryPoint, outputPath:outputPath, rewriteUrls:rewriteUrls);
   Task d2js = createDart2JsTask(["$outputPath/${entryPointFileName}_bootstrap.dart"], liveTypeAnalysis: true, rejectDeprecatedFeatures: true);
-  addTask("w2d", w2d);
-  return w2d.chain("w2d").and("d2js", d2js);
+  addTask("w2d_md", w2d);
+  return w2d.chain("w2d_md").and("d2js", d2js);
 }
 
 Future<bool> _dwc(TaskContext ctx, String output, String entryPoint, bool rewriteUrls){
@@ -124,6 +124,8 @@ Task createFixUrlTask(String compiledEntryPoint, {String staticPath:"", WebuiTar
 Future<bool> _fixUrls(TaskContext ctx, String compiledEntryPoint, String staticPath, WebuiTargetType outputType) {
   Completer completer = new Completer();
   final compiledEntry = new File(compiledEntryPoint);
+  final entryPointPath = new Path(compiledEntryPoint);
+  final entryPoint = entryPointPath.filename;
   assert(compiledEntry.existsSync());
   
   var document = parse(compiledEntry.readAsStringSync());
@@ -138,17 +140,17 @@ Future<bool> _fixUrls(TaskContext ctx, String compiledEntryPoint, String staticP
       ctx.fine(path.filename);
       element.attributes["src"] = "$staticPath${path.filename}";
     } else {
-      if(WebuiTargetType.MINIDART) {
-        element.attributes["src"] = "$staticPath${path.filename}_bootstrap.compiled.dart";
+      if(outputType == WebuiTargetType.MINIDART) {
+        element.attributes["src"] = "$staticPath${entryPoint}_bootstrap.compiled.dart";
       }
-      if(WebuiTargetType.JS) {
-        element.attributes["src"] = "$staticPath${path.filename}_bootstrap.dart.js";
+      if(outputType == WebuiTargetType.JS) {
+        element.attributes["src"] = "$staticPath${entryPoint}_bootstrap.dart.js";
       }
     }
   });
   
   compiledEntry.writeAsStringSync(document.outerHtml);
-  
+  ctx.info("Fixed Urls at entrypoint $compiledEntryPoint");
   completer.complete(true);
   return completer.future;
 }
