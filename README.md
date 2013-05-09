@@ -13,7 +13,7 @@ Hop is a framework that simplifies and automates console tasks in Dart.  See [Ho
 # How will this library help me?
 
 This library will allow you to:
-* Compile webui components to Javascript in one console step as well as minidart compilation (dart to dart). [[Dart2Dart In Development](https://github.com/damondouglas/webui_tasks.dart/issues/milestones)]
+* Compile webui components to Javascript in one console step as well as minidart compilation (dart to dart).
 * Fix the relative Urls in the output Webui entry point Html file.
 * Copy static assets such as Javascript linked from the entry point Html file into the target output directory.
 
@@ -43,22 +43,36 @@ import 'package:webui_tasks/webui_tasks.dart';
 void main() {
   String entryPointPath = "web/simple.html";
   
-  Task w2d = createWebui2DartTask(entryPointPath);
-  addTask("w2d", w2d);
-  
-  Task d2js = createDart2JsTask(["output/simple.html_bootstrap.dart"], liveTypeAnalysis: true, rejectDeprecatedFeatures: true);
-  addTask("d2js", d2js);
-  
-  Task co = createCopyOutTask(entryPointPath, outputType:WebuiTargetType.JS);
+  // Copy out static linked assets such as packages/browser/dart.js
+  Task co = createCopyOutTask(entryPointPath);
   addTask("co", co);
   
-  addChainedTask('w2d2js', ['w2d','d2js','co']);
+  // Fix Urls in entrypoint to point to static assets and appropriate main Javascript file.
+  Task fixjs = createFixUrlTask("output/simple.html", outputType:WebuiTargetType.JS);
+  addTask("fixjs",fixjs);
+  
+  // Call DWC and dart2js compilers.
+  ChainedTask w2d2js = createWebui2JsTask(entryPointPath);
+  addTask("w2d2js", w2d2js);
+  
+  // Run all three tasks at once to deploy Javascript from webui.
+  addChainedTask('deployjs', ['w2d2js','co','fixjs']);
+  
+  // Fix Urls in entrypoint to point to static assets and appropriate minified main Dart script file.
+  Task fixmd = createFixUrlTask("output/simple.html", outputType:WebuiTargetType.MINIDART);
+  addTask("fixmd", fixmd);
+  
+  ChainedTask w2d2d = createWebui2MiniDartTask(entryPointPath);
+  addTask("w2d2d", w2d2d);
+  
+  // Run all three tasks at once to deploy Minidart from webui.
+  addChainedTask('deploymd', ['w2d2d','co','fixmd']);
   
   runHop();
 }
 ```
 
-1. Run in webui project root as `dart tool/hop_runner.dart w2d2js`
+1. Run in webui project root as `dart tool/hop_runner.dart deployjs`
 2. Open `output/simple.html` in any modern browser. See [hosted example](https://googledrive.com/host/0B315YrNkj-ZxeEluMlRnX0xOYTQ/simple.html).
 
 From [example](https://github.com/damondouglas/webui_tasks.dart/blob/master/example/simple/tool/hop_runner.dart) in [sample webui project](https://github.com/damondouglas/webui_tasks.dart/tree/master/example/simple)
