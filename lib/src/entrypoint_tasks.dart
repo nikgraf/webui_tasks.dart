@@ -103,7 +103,8 @@ Future<bool> _dwc(TaskContext ctx, String output, String entryPoint, bool rewrit
             stdOutWriter: ctx.info,
             stdErrWriter: ctx.severe);
       }).then((int exitCode){
-        return exitCode==1;
+        ctx.fine("$exitCode");
+        return exitCode==0;
       });
 }
 
@@ -142,9 +143,11 @@ Future<bool> _fixUrls(TaskContext ctx, String compiledEntryPoint, String staticP
     } else {
       if(outputType == WebuiTargetType.MINIDART) {
         element.attributes["src"] = "$staticPath${entryPoint}_bootstrap.compiled.dart";
+        ctx.fine("$staticPath${entryPoint}_bootstrap.compiled.dart");
       }
       if(outputType == WebuiTargetType.JS) {
         element.attributes["src"] = "$staticPath${entryPoint}_bootstrap.dart.js";
+        ctx.fine("$staticPath${entryPoint}_bootstrap.dart.js");
       }
     }
   });
