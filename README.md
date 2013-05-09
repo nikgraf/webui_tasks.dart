@@ -21,12 +21,11 @@ _Dart Documentation coming soon._
 
 # How do I get started?
 
-This library isn't yet published on [pub](http://http://pub.dartlang.org/).  Meanwhile, you can add the following dependency:
+Add the following dependency:
 
 ```yaml
 dependencies:
-  webui_tasks:
-    git: https://github.com/damondouglas/webui_tasks.dart
+  webui_tasks: any
 ```
 
 # Example
