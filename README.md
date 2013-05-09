@@ -71,9 +71,13 @@ void main() {
   runHop();
 }
 ```
-
+### Deploy project as Javascript
 1. Run in webui project root as `dart tool/hop_runner.dart deployjs`
 2. Open `output/simple.html` in any modern browser. See [hosted example](https://googledrive.com/host/0B315YrNkj-ZxeEluMlRnX0xOYTQ/simple.html).
+
+### Deploy project as mini dart
+1. Run in webui project root as `dart tool/hop_runner.dart deploymd`
+2. Open `output/simple.html` in Chromium.
 
 From [example](https://github.com/damondouglas/webui_tasks.dart/blob/master/example/simple/tool/hop_runner.dart) in [sample webui project](https://github.com/damondouglas/webui_tasks.dart/tree/master/example/simple)
 
