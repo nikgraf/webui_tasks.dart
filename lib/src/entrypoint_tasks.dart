@@ -18,7 +18,6 @@ class WebuiTargetType {
  * [entryPoint] is the path to the main entry point of the webui application.  
  * [outputPath] defaults to [project_root/output] unless one is provided.  
  * [rewriteUrls] determines whether to pass --rewrite-urls or --no-rewrite-urls to the dwc compiler.
- * [outputType] can be either [WebuiTargetType.DART] or [WebuiTargetType.MINIDART].
  */
 
 Task createWebui2DartTask(String entryPoint, {String outputPath:"output", bool rewriteUrls:false}) {
@@ -36,8 +35,22 @@ Task createWebui2DartTask(String entryPoint, {String outputPath:"output", bool r
       context.info("Compiled Webui at: $outputPath");
     });
   });
-  
+}
 
+ChainedTask createWebui2MiniDartTask(String entryPoint, {String outputPath:"output", bool rewriteUrls:false}) {
+  
+  final entryPointPath = new Path(entryPoint);
+  final entryPointFile = new File.fromPath(entryPointPath);
+  final entryPointFileName = entryPointPath.filename;
+  final packageDir = new Directory('packages');
+  
+  assert(packageDir.existsSync());
+  assert(entryPointFile.existsSync() && entryPoint.endsWith(".html"));
+  
+  Task w2d = createWebui2DartTask(entryPoint, outputPath:outputPath, rewriteUrls:rewriteUrls);
+  Task d2d = createDartCompilerTask(["$outputPath/${entryPointFileName}_bootstrap.dart"], outputType:CompilerTargetType.DART);
+  addTask("w2d", w2d);
+  return w2d.chain("w2d").and("d2d", d2d);
 }
 
 Future<bool> _dwc(TaskContext ctx, String output, String entryPoint, bool rewriteUrls){
