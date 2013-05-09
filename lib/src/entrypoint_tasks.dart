@@ -21,8 +21,7 @@ class WebuiTargetType {
  * [outputType] can be either [WebuiTargetType.DART] or [WebuiTargetType.MINIDART].
  */
 
-Task createWebui2DartTask(String entryPoint, {String outputPath:"output", bool rewriteUrls:false, WebuiTargetType outputType:WebuiTargetType.DART}) {
-  requireArgument(outputType == WebuiTargetType.MINIDART || outputType == WebuiTargetType.DART, 'outputType');
+Task createWebui2DartTask(String entryPoint, {String outputPath:"output", bool rewriteUrls:false}) {
   
   final entryPointPath = new Path(entryPoint);
   final entryPointFile = new File.fromPath(entryPointPath);
@@ -32,13 +31,13 @@ Task createWebui2DartTask(String entryPoint, {String outputPath:"output", bool r
   assert(packageDir.existsSync());
   assert(entryPointFile.existsSync() && entryPoint.endsWith(".html"));
   
-  if(outputType == WebuiTargetType.DART) {
-    return new Task.async((TaskContext context){
-      return _dwc(context, outputPath, entryPoint, rewriteUrls).whenComplete((){
-        context.info("Compiled Webui at: $outputPath");
-      });
+  return new Task.async((TaskContext context){
+    return _dwc(context, outputPath, entryPoint, rewriteUrls).whenComplete((){
+      context.info("Compiled Webui at: $outputPath");
     });
-  }
+  });
+  
+
 }
 
 Future<bool> _dwc(TaskContext ctx, String output, String entryPoint, bool rewriteUrls){
