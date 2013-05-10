@@ -1,5 +1,5 @@
 name: webui_tasks
-version: 0.0.1
+version: 0.0.2
 author: Damon Douglas <douglas.damon@gmail.com>
 description: A webui task library based on Hop.
 homepage: https://github.com/damondouglas/webui_tasks.dart
