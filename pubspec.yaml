@@ -6,7 +6,10 @@ homepage: https://github.com/damondouglas/webui_tasks.dart
 dependencies:
   html5lib: '>=0.4.3 <0.4.4'
   bot: '>=0.20.1 <0.20.2'
-  web_ui: '>=0.4.7+3 <0.4.8'
+  web_ui:
+    git:
+      ref: ce921b1a96dd239be1156800a1dca68520c3cfb3
+      url: git@github.com:nikgraf/web-ui.git
   hop: '>=0.22.1+1 <0.22.2'
 
 #dependencies:
